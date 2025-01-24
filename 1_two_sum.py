@@ -1,3 +1,7 @@
+# Accepted
+# Runtime 0 ms Beats 100.00%
+# Memory 18.77 MB Beats 42.99%
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         dicionario = {}

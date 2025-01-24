@@ -1,3 +1,7 @@
+# Accepted
+# Runtime 111 ms Beats 31.37%
+# Memory 31.35 MB Beats 5.63%
+
 class Solution:
     def gridGame(self, grid: List[List[int]]) -> int:
         n = len(grid[0])
