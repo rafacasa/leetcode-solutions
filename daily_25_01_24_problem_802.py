@@ -1,49 +1,43 @@
 # Accepted
-# Runtime 1866 ms Beats 5.02%
-# Memory 24.23 MB Beats 16.07%
+# Runtime 53 ms Beats 48.65%
+# Memory 23.85 MB Beats 29.94%
 
 class Solution:
     
     def is_safe(self, node, curr_path):
         if len(self.graph) == 0:
-            self.safe.add(node)
-            self.resolved.remove(node)
+            self.safe[node] = 1
             return True
             
-        next_path = (*curr_path, node)
+        next_path = set(curr_path)
+        next_path.add(node)
         for child in self.graph[node]:
             if child == node:
-                self.resolved.remove(node)
-                self.not_safe.add(node)
+                self.safe[node] = 0
                 return False
             if child in self.safe:
-                continue
-            if child in self.not_safe:
-                self.resolved.remove(node)
-                self.not_safe.add(node)
+                if self.safe[child]:
+                    continue
+                self.safe[node] = 0
                 return False
             if child in curr_path:
-                self.resolved.remove(node)
-                self.not_safe.add(node)
+                self.safe[node] = 0
                 return False
             if not self.is_safe(child, next_path):
-                self.resolved.remove(node)
-                self.not_safe.add(node)
+                self.safe[node] = 0
                 return False
         
-        self.resolved.remove(node)
-        self.safe.add(node)
+        self.safe[node] = 1
         return True
         
     
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
         self.graph = graph
         qtd_node = len(self.graph)
-        self.safe = set()
-        self.not_safe = set()
-        self.resolved = list(range(qtd_node))
+        self.safe = {}
         
-        while self.resolved:
-            self.is_safe(self.resolved[0], (self.resolved[0],))
-        
-        return sorted(self.safe)
+        for i in range(qtd_node):
+            if i not in self.safe:
+                self.is_safe(i, {i})
+
+        return sorted([node for node, status in self.safe.items() if status])
