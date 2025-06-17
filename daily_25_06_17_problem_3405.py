@@ -1,6 +1,21 @@
 # Solution MLE
 
 
+MOD = 10**9 + 7
+
+
+# https://cp-algorithms.com/algebra/binary-exp.html
+def fast_pow(base: int, exponent: int) -> int:
+    base = base % MOD
+    ans = 1
+    while exponent:
+        if exponent & 1:
+            ans = ans * base % MOD
+        base = base * base % MOD
+        exponent >>= 1
+    return ans
+
+
 class Solution:
     def __init__(self):
         self.fat = {0: 1, 1: 1}
