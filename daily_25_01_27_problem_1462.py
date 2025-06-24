@@ -2,9 +2,11 @@
 # Runtime 54 ms Beats 53.21%
 # Memory 20.87 MB Beats 9.70%
 
+
 class no:
     def __init__(self):
         self.pre_requisitos = set()
+
 
 class Solution:
     def get_prerequisitos(self, n):
@@ -29,19 +31,19 @@ class Solution:
         temp.update(self.pre_requisitos[n])
         return temp
 
-    def checkIfPrerequisite(self, numCourses, prerequisites , queries):
+    def checkIfPrerequisite(self, numCourses, prerequisites, queries):
         self.materias = [no() for i in range(numCourses)]
         self.pre_requisitos = dict()
-        
+
         for pre_req, mat in prerequisites:
             self.materias[mat].pre_requisitos.add(pre_req)
-        
+
         for i in range(numCourses):
             self.get_prerequisitos(i)
-            if len(self.pre_requisitos)== numCourses:
+            if len(self.pre_requisitos) == numCourses:
                 break
         retorno = list()
         for u, v in queries:
             retorno.append(u in self.pre_requisitos[v])
-        
+
         return retorno
